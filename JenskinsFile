@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Cloner le dépôt
+                git url: 'https://github.com/linabdf/tp7.git/', branch: 'main'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Compiler l'application avec Maven
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Exécuter les tests unitaires avec Maven
+                sh 'mvn test'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Archiver les fichiers de build pour chaque exécution
+            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+        }
+        success {
+            echo 'Build succeeded!'
+        }
+        failure {
+            echo 'Build failed.'
+        }
+    }
+}
