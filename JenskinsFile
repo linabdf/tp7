@@ -16,14 +16,14 @@ pipeline {
         stage('Test') {
             steps {
                 // Exécuter les tests unitaires avec Maven
-                sh 'mvn test'
+               sh 'mvn clean package -X'
             }
         }
     }
     post {
         always {
             // Archiver les fichiers de build pour chaque exécution
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+           junit '**/target/surefire-reports/*.xml'
         }
         success {
             echo 'Build succeeded!'
