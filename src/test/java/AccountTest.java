@@ -23,8 +23,10 @@ class AccountTest {
         boolean success = account.withdraw(30.0);
         assertTrue(success, "Le retrait de 30.0 aurait dû être autorisé");
         assertEquals(70.0, account.checkBalance(), "Le solde après le retrait devrait être de 70.0");
+        // Ajoutez ces lignes pour déboguer
+        System.out.println("Success: " + success);  // Affiche true si le retrait est autorisé
+        System.out.println("Balance: " + account.checkBalance());  // Affiche le solde après le retrait
     }
-
     @Test
     void testWithdrawInvalidAmount() {
         Acount.Account account = new Acount.Account(100.0);
